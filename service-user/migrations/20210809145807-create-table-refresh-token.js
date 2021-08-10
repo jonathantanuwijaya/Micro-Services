@@ -3,7 +3,7 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
 
-        await queryInterface.createTable('refersh_tokens', {
+        await queryInterface.createTable('refresh_tokens', {
             id: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
@@ -27,7 +27,7 @@ module.exports = {
                 allowNull: false
             }
         });
-        await queryInterface.addConstraint('refersh_tokens', {
+        await queryInterface.addConstraint('refresh_tokens', {
             type: 'foreign key',
             name: 'REFRESH_TOKENS__USER_ID',
             fields: ['user_id'],
