@@ -21,7 +21,7 @@ class CourseController extends Controller
             'type' => 'required|in:free,premium',
             'status' => 'required|in:draft,published',
             'price' => 'integer',
-            'level' => 'required|in:all-level,beginner,intermediate,advance',
+            'level' => 'required|in:all-level,beginner,intermediate,advanced',
             'mentor_id' => 'required|integer',
             'description' => 'string'
         ];
@@ -57,7 +57,7 @@ class CourseController extends Controller
             'type' => 'in:free,premium',
             'status' => 'in:draft,published',
             'price' => 'integer',
-            'level' => 'in:all-level,beginner,intermediate,advance',
+            'level' => 'in:all-level,beginner,intermediate,advanced',
             'mentor_id' => 'integer',
             'description' => 'string'
         ];

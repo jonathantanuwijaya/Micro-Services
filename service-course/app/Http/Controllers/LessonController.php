@@ -72,6 +72,8 @@ class LessonController extends Controller
             }
 
         }
+        $lesson->fill($data);
+        $lesson->save();
         return response()->json([
             'status' => 'success',
             'data' => $lesson
