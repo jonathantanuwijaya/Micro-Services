@@ -48,11 +48,36 @@ class MyCourseController extends Controller
                 'message' => 'User already taken this course'
             ], 409);
         }
-        $myCourse = MyCourse::create($data);
-        return response()->json([
-            'status' => 'success',
-            'data' => $myCourse
-        ]);
+
+        if ($course->type === 'premium') {
+            if($course->price === 0 ){
+                return response()->json([
+                    'status'=>'error',
+                    'message'=>'Price cannot be 0'
+                ]);
+            }
+            $order = postOrder([
+                'user' => $user['data'],
+                'course' => $course->toArray()
+            ]);
+            if ($order['status'] === 'error') {
+                return response()->json([
+                    'status' => $order['status'],
+                    'message' => $order['message']
+                ], $order['http_code']);
+            }
+            return response()->json([
+                'status' => $order['status'],
+                'data' => $order['data']
+            ]);
+        } else {
+            $myCourse = MyCourse::create($data);
+            return response()->json([
+                'status' => 'success',
+                'data' => $myCourse
+            ]);
+        }
+
     }
 
     public function index(Request $request)
@@ -67,5 +92,15 @@ class MyCourseController extends Controller
             'data' => $mycourses->get()
         ]);
 
+    }
+
+    public function createPremiumAccess(Request $request)
+    {
+        $data = $request->all();
+        $myCourse = MyCourse::create($data);
+        return response()->json([
+            'status' => 'success',
+            'data' => $myCourse
+        ]);
     }
 }
